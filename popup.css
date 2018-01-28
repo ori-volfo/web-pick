@@ -1,0 +1,27 @@
+html, body, div{
+    height: 100%;
+    margin: 0;
+    background: #f1f1f1;
+}
+.main{
+    height: 100px;
+}
+.btn{
+    color: #fff;
+    background-color: #337ab7;
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid #2e6da4;
+    border-radius: 4px;
+    margin: 32px;
+    cursor: pointer;
+}
+.btn:hover{
+    background-color: #286090;
+    border-color: #204d74;
+}
+.iframe{
+    height: calc(100% - 105px);
+}
