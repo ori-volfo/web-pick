@@ -5,6 +5,7 @@ html, body, div{
 }
 .main{
     height: 100px;
+    position: relative;
 }
 .btn{
     color: #fff;
@@ -17,10 +18,20 @@ html, body, div{
     border-radius: 4px;
     margin: 32px;
     cursor: pointer;
+    display: none;
 }
 .btn:hover{
     background-color: #286090;
     border-color: #204d74;
+}
+#time{
+    position: absolute;
+    top: 20%;
+    left: 49%;
+    width: 0;
+    height: 35px;
+    font-size: 45px;
+    font-family: monospace;
 }
 .iframe{
     height: calc(100% - 105px);
