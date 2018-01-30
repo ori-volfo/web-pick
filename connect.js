@@ -31,8 +31,9 @@ window.Webpick = function(side, seconds, target, links){
         }
         else{ // Open ad in local tab as an iframe
             var iframe = document.createElement('iframe');
-            setAttributes(iframe,{'src':url,'id':'ifrm','style': 'position: absolute; top: 0; left: 0; width: 100%; height: 99%'});
+            setAttributes(iframe,{'src':url,'id':'ifrm','style': 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000000'});
             document.body.appendChild(iframe);
+            document.body.setAttribute('style','overflow: hidden');
             popup = iframe.contentWindow;
         }
         setTimeout(function(){
