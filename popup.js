@@ -1,7 +1,7 @@
 (function(){
     function receiveMessage(event){
         var message = JSON.parse(event.data);
-        // block possible messages from iFrame
+        // block possible messages from 3rd party sites in iFrame
         if(event.origin.indexOf(message.eventOrigin) === -1){return}
 
         // button side determined by API
@@ -15,16 +15,27 @@
             seconds--;
             if(seconds === 0){
                 clearInterval(interval);
-                window.location = message.clickHref;
+                redirect();
             }
         },1000);
 
         // Go directly to desired link
         button.addEventListener("click",function(){
-            window.location = message.clickHref;
+            redirect();
         });
-        // event.source.postMessage("message here",
-        //     event.origin);
+
+
+        function redirect(){
+            if(message.target === '_blank'){ // The new tab is redirected to the link
+                window.location = message.clickHref;
+            }
+            else{ // Message parent window to close iframe and redirect
+                var callbackMessage = JSON.stringify({action:'close_ad',redirectUrl:message.clickHref});
+                event.source.postMessage(callbackMessage,
+                    event.origin);
+            }
+
+        }
     }
 
     window.addEventListener("message", receiveMessage, false);
