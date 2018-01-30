@@ -6,6 +6,7 @@ window.Webpick = function(side, seconds, target, links){
     var clickHref;
     var linksArr = [].slice.call(document.querySelectorAll('a'));
 
+    // Filter unnecessary links
     switch(links){
         case 'internal':
             linksArr = linksArr.filter( function(link){return LOCAL_HOST.indexOf(link.host) > -1});
@@ -16,6 +17,7 @@ window.Webpick = function(side, seconds, target, links){
         case 'all':
         default:
     }
+
     linksArr.forEach(function(link){
         link.addEventListener("click",function(e){
             e.preventDefault();
@@ -23,19 +25,22 @@ window.Webpick = function(side, seconds, target, links){
             showAd();
         });
     });
+
     function showAd(){
         var url = SERVER_HOST+"/popup.html";
         var params = JSON.stringify({clickHref: clickHref, side: side, seconds: seconds, eventOrigin: LOCAL_HOST, target: target});
+
         if(target === '_blank'){ // Open ad in new tab
             popup = window.open(url, target);
         }
-        else{ // Open ad in local tab as an iframe
+        else{ // Open ad in current tab, as an iFrame
             var iframe = document.createElement('iframe');
             setAttributes(iframe,{'src':url,'id':'ifrm','style': 'position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000000'});
             document.body.appendChild(iframe);
             document.body.setAttribute('style','overflow: hidden');
             popup = iframe.contentWindow;
         }
+
         setTimeout(function(){
             popup.postMessage(params, SERVER_HOST);
         }, 300);
@@ -58,6 +63,7 @@ window.Webpick = function(side, seconds, target, links){
 
 };
 
+// Set multiple attributes
 function setAttributes(el, attrs) {
     for(var key in attrs) {
         el.setAttribute(key, attrs[key]);
